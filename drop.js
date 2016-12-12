@@ -8,8 +8,8 @@ function Drop() {
   this.x = random(width) - (width * widthOffset);
   this.y = random(-1000, -50);
   this.z = random(0, 20);
-  this.len = map(this.z, 0, 20, 5, 20);
-  this.angle = map(this.z, 0, 20, 6, 10);
+  this.len = map(this.z, 0, 20, 5, 30);
+  this.angle = map(this.z, 0, 20, 4, 5);
   this.xspeed = map(this.z, 0, 20, xSpeedMin, xSpeedMax);
   this.yspeed = map(this.z, 0, 20, ySpeedMin, ySpeedMin);
 
@@ -38,10 +38,10 @@ function Drop() {
 
   this.splash = function(){
     fill(3, 74, 236);
-    ellipse(this.x, this.y, 10, 30);
+    ellipse(this.x, this.y, 15, 35);
   }
   this.show = function() {
-    var thick = map(this.z, 0, 20, 1, 2);
+    var thick = map(this.z, 0, 20, 1.0, 2.5);
     strokeWeight(thick);
     stroke(3, 74, 236);
     line(this.x, this.y, this.x+this.angle, this.y+this.len);

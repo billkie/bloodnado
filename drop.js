@@ -1,31 +1,50 @@
-// Daniel Shiffman
-// http://codingrainbow.com
-// http://patreon.com/codingrainbow
-// Code for: https://youtu.be/KkyIDI6rQJI
-
-
 function Drop() {
-  this.x = random(width);
-  this.y = random(-500, -50);
+  var widthOffset = 0.25,
+      xSpeedMin = 0.5,
+      xSpeedMax = 0.7,
+      ySpeedMin = 1.0,
+      ySpeedMax = 10.0;
+
+  this.x = random(width) - (width * widthOffset);
+  this.y = random(-1000, -50);
   this.z = random(0, 20);
-  this.len = map(this.z, 0, 20, 10, 20);
-  this.yspeed = map(this.z, 0, 20, 1, 20);
+  this.len = map(this.z, 0, 20, 5, 20);
+  this.angle = map(this.z, 0, 20, 6, 10);
+  this.xspeed = map(this.z, 0, 20, xSpeedMin, xSpeedMax);
+  this.yspeed = map(this.z, 0, 20, ySpeedMin, ySpeedMin);
 
   this.fall = function() {
     this.y = this.y + this.yspeed;
-    var grav = map(this.z, 0, 20, 0, 0.2);
+    this.x = this.x + this.xspeed;
+    var grav = map(this.z, 0, 20, 0.05, 0.3);
+    var wind = map(this.z, 0, 20, 0.025, 0.075);
+    this.xspeed = this.xspeed + wind;
     this.yspeed = this.yspeed + grav;
 
     if (this.y > height) {
-      this.y = random(-200, -100);
-      this.yspeed = map(this.z, 0, 20, 4, 10);
+      this.splash();
+      this.x = random(width) - (width * widthOffset);
+      this.y = random(-1000, -50);
+      this.xspeed = map(this.z, 0, 20, xSpeedMin, xSpeedMax);
+      this.yspeed = map(this.z, 0, 20, ySpeedMin, ySpeedMin);
+    }
+    if (this.x > width) {
+      this.x = random(width) - (width * widthOffset);
+      this.y = random(-1000, -50);
+      this.xspeed = map(this.z, 0, 20, xSpeedMin, xSpeedMax);
+      this.yspeed = map(this.z, 0, 20, ySpeedMin, ySpeedMin);
     }
   }
 
+  this.splash = function(){
+    fill(3, 74, 236);
+    ellipse(this.x, this.y, 10, 30);
+  }
   this.show = function() {
-    var thick = map(this.z, 0, 20, 1, 3);
+    var thick = map(this.z, 0, 20, 1, 2);
     strokeWeight(thick);
-    stroke(138, 43, 226);
-    line(this.x, this.y, this.x, this.y+this.len);
+    stroke(3, 74, 236);
+    line(this.x, this.y, this.x+this.angle, this.y+this.len);
+
   }
 }
